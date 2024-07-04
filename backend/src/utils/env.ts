@@ -6,8 +6,12 @@ dotenv.config();
 
 // only for development
 const env = cleanEnv(process.env, {
-  PORT: port({ default: 3000 }),
-  FRONTEND_BASE_URL: url({ default: 'https://dslkk3miov5rp.cloudfront.net' }),
+  PORT: port({
+    default: 3000,
+  }),
+  FRONTEND_BASE_URL: url({
+    default: 'https://dslkk3miov5rp.cloudfront.net',
+  }),
 });
 
 export default env;
