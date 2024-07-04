@@ -15,6 +15,7 @@
     "noPropertyAccessFromIndexSignature": false,
     "skipLibCheck": true,
     "ignoreDeprecations": "5.0",
+    "resolveJsonModule": true,
   },
   "extends": [],
   "exclude": ["node_modules"],
