@@ -1,19 +1,18 @@
 import cors from 'cors';
-import express, { Response } from 'express';
+import express from 'express';
 import { pino } from 'pino';
 
-import { env } from './utils/env';
+import healthCheckRouter from '@/api/healthCheck/healthCheckRouter';
+import questionsRouter from '@/api/questions/questionsRouter';
+import env from '@/utils/env';
 
 const logger = pino({ name: 'server start' });
 const app = express();
 
 app.use(cors({ origin: env.FRONTEND_BASE_URL, credentials: true }));
 
-app.get('/', (_, res: Response) => {
-  logger.info('/ endpoint called');
-
-  res.json({ message: 'Hello World!' });
-});
+app.use('/health-check', healthCheckRouter);
+app.use('/questions', questionsRouter);
 
 // only for development
 app.listen(env.PORT, () => {
