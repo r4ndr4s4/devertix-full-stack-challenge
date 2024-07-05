@@ -5,7 +5,7 @@ import { IQuestions, IQuestionsWithAnswers } from "./types";
 import Question from "../Question";
 import Results from "../Results";
 
-const NUMBER_OF_QUESTIONS = 10;
+export const NUMBER_OF_QUESTIONS = 10;
 
 function App() {
   const [questions, setQuestions] = useState<IQuestionsWithAnswers>();

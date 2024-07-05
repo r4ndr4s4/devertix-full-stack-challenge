@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppStateContext } from "../App/AppState";
+import { NUMBER_OF_QUESTIONS } from "../App";
 
 function Question() {
   const { questions, setQuestions, currentQuestion, setCurrentQuestion } =
@@ -16,9 +17,9 @@ function Question() {
 
   return (
     <>
-      <h1>Question ({currentQuestion})</h1>
+      <h1>Question ({`${currentQuestion}/${NUMBER_OF_QUESTIONS}`})</h1>
 
-      <p>{JSON.stringify(questions[currentQuestion - 1])}</p>
+      <p>{questions[currentQuestion - 1].question}</p>
 
       <button onClick={() => setCurrentAnswer(false)}>False</button>
       <button onClick={() => setCurrentAnswer(true)}>True</button>
