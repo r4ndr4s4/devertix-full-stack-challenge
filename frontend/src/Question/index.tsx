@@ -17,7 +17,10 @@ function Question() {
 
   return (
     <>
-      <h1>Question ({`${currentQuestion}/${NUMBER_OF_QUESTIONS}`})</h1>
+      <h1>
+        Question
+        <br />({`${currentQuestion}/${NUMBER_OF_QUESTIONS}`})
+      </h1>
 
       <p>{questions[currentQuestion - 1].question}</p>
 
