@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import { AppStateContext } from "../App/AppState";
+import { IQuestionsWithAnswers } from "../App/types";
 
 function Results() {
-  const { questions, setCurrentQuestion } = useContext(AppStateContext);
+  const { questions, setQuestions, setCurrentQuestion } =
+    useContext(AppStateContext);
 
   return (
     <>
@@ -10,7 +12,25 @@ function Results() {
 
       <p>{JSON.stringify(questions)}</p>
 
-      <button onClick={() => setCurrentQuestion(1)}>Play again</button>
+      <button
+        onClick={() => {
+          const currentQuestions = [...questions];
+
+          const questionsWithAnswers: IQuestionsWithAnswers =
+            currentQuestions.map((question) => {
+              return {
+                ...question,
+                currentAnswer: undefined,
+              };
+            });
+
+          setQuestions(questionsWithAnswers);
+
+          setCurrentQuestion(0);
+        }}
+      >
+        Play again
+      </button>
     </>
   );
 }
