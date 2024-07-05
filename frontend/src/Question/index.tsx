@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { AppStateContext } from "../App/AppState";
 import { NUMBER_OF_QUESTIONS } from "../App";
 
@@ -6,14 +6,17 @@ function Question() {
   const { questions, setQuestions, currentQuestion, setCurrentQuestion } =
     useContext(AppStateContext);
 
-  const setCurrentAnswer = (currentAnswer: boolean) => {
-    const currentQuestions = [...questions];
-    currentQuestions[currentQuestion - 1].currentAnswer = currentAnswer;
+  const setCurrentAnswer = useCallback(
+    (currentAnswer: boolean) => {
+      const currentQuestions = [...questions];
+      currentQuestions[currentQuestion - 1].currentAnswer = currentAnswer;
 
-    setQuestions(currentQuestions);
+      setQuestions(currentQuestions);
 
-    setCurrentQuestion(currentQuestion + 1);
-  };
+      setCurrentQuestion(currentQuestion + 1);
+    },
+    [currentQuestion, questions, setCurrentQuestion, setQuestions]
+  );
 
   return (
     <>
