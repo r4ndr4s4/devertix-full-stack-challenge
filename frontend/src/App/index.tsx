@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
+import { Typography } from "antd";
+import styled from "@emotion/styled";
 import { AppStateContext } from "./AppState";
 import Intro from "../Intro";
 import { IQuestions, IQuestionsWithAnswers } from "./types";
 import Question from "../Question";
 import Results from "../Results";
+
+const { Paragraph } = Typography;
+
+const Container = styled.div`
+  width: 320px;
+  height: 640px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export const NUMBER_OF_QUESTIONS = 10;
 
@@ -51,20 +64,22 @@ function App() {
   }, []);
 
   if (!questions) {
-    return <p>Questions are not fetched...</p>;
+    return <Paragraph>Questions are not fetched...</Paragraph>;
   }
 
   return (
     <AppStateContext.Provider
       value={{ questions, setQuestions, currentQuestion, setCurrentQuestion }}
     >
-      {currentQuestion === -1 ? (
-        <Intro />
-      ) : currentQuestion < NUMBER_OF_QUESTIONS ? (
-        <Question />
-      ) : (
-        <Results />
-      )}
+      <Container>
+        {currentQuestion === -1 ? (
+          <Intro />
+        ) : currentQuestion < NUMBER_OF_QUESTIONS ? (
+          <Question />
+        ) : (
+          <Results />
+        )}
+      </Container>
     </AppStateContext.Provider>
   );
 }
