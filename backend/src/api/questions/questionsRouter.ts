@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { validateRequest } from 'zod-express-middleware';
 
 import { logger } from '@/server';
+import { HTTPError } from '@/utils/errorMiddleware';
 
 const router = express.Router();
 
@@ -23,14 +24,13 @@ router.get(
     const availableQuestions = questions.length;
 
     const requestedNumberOfQuestions = Number(requestedQuestions);
-    logger.info({ availableQuestions, requestedQuestions, requestedNumberOfQuestions }); // TODO remove
 
     if (requestedNumberOfQuestions === 0) {
-      throw new Error('Invalid requested question number (0).');
+      throw new HTTPError('Invalid requested question number (0).');
     }
 
     if (requestedNumberOfQuestions > availableQuestions) {
-      throw new Error(`Invalid requested question number (only ${availableQuestions} available).`);
+      throw new HTTPError(`Invalid requested question number (only ${availableQuestions} available).`);
     }
 
     res.json({
