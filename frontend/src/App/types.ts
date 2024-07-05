@@ -13,6 +13,8 @@ interface IQuestionWithAnswer extends IQuestion {
 
 export type IQuestionsWithAnswers = IQuestionWithAnswer[] | [];
 
+export type AppState = "INTRO" | "QUESTION" | "RESULTS";
+
 export interface IAppState {
   questions: IQuestionsWithAnswers;
   setQuestions: Dispatch<

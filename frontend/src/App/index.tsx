@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Typography } from "antd";
 import styled from "@emotion/styled";
 import { AppStateContext } from "./AppState";
 import Intro from "../Intro";
-import { IQuestions, IQuestionsWithAnswers } from "./types";
+import { AppState, IQuestions, IQuestionsWithAnswers } from "./types";
 import Question from "../Question";
 import Results from "../Results";
 
@@ -63,6 +63,27 @@ function App() {
     })();
   }, []);
 
+  const appState: AppState = useMemo(
+    () =>
+      currentQuestion === -1
+        ? "INTRO"
+        : currentQuestion < NUMBER_OF_QUESTIONS
+        ? "QUESTION"
+        : "RESULTS",
+    [currentQuestion]
+  );
+
+  const currentComponent = useMemo(() => {
+    switch (appState) {
+      case "INTRO":
+        return <Intro />;
+      case "QUESTION":
+        return <Question />;
+      case "RESULTS":
+        return <Results />;
+    }
+  }, [appState]);
+
   if (!questions) {
     return <Paragraph>Questions are not fetched...</Paragraph>;
   }
@@ -71,15 +92,7 @@ function App() {
     <AppStateContext.Provider
       value={{ questions, setQuestions, currentQuestion, setCurrentQuestion }}
     >
-      <Container>
-        {currentQuestion === -1 ? (
-          <Intro />
-        ) : currentQuestion < NUMBER_OF_QUESTIONS ? (
-          <Question />
-        ) : (
-          <Results />
-        )}
-      </Container>
+      <Container>{currentComponent}</Container>
     </AppStateContext.Provider>
   );
 }
