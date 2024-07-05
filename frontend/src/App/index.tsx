@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { AppStateContext } from "./AppState";
 import Intro from "../Intro";
 import { IQuestions, IQuestionsWithAnswers } from "./types";
+import Question from "../Question";
+import Results from "../Results";
+
+const NUMBER_OF_QUESTIONS = 10;
 
 function App() {
   const [questions, setQuestions] = useState<IQuestionsWithAnswers>();
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   // TODO loading state
 
   // TODO swr/react query
@@ -13,7 +18,9 @@ function App() {
       try {
         // TODO env var validation
         const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_BASE_URL}/questions?number=10`
+          `${
+            import.meta.env.VITE_BACKEND_BASE_URL
+          }/questions?number=${NUMBER_OF_QUESTIONS}`
         );
 
         if (!response.ok) {
@@ -48,8 +55,16 @@ function App() {
   }
 
   return (
-    <AppStateContext.Provider value={{ questions, currentQuestion: 0 }}>
-      <Intro />
+    <AppStateContext.Provider
+      value={{ questions, setQuestions, currentQuestion, setCurrentQuestion }}
+    >
+      {currentQuestion === 0 ? (
+        <Intro />
+      ) : currentQuestion <= NUMBER_OF_QUESTIONS ? (
+        <Question />
+      ) : (
+        <Results />
+      )}
     </AppStateContext.Provider>
   );
 }

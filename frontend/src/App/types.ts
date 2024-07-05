@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 interface IQuestion {
   question: string;
   answer: boolean;
@@ -13,5 +15,9 @@ export type IQuestionsWithAnswers = IQuestionWithAnswer[] | [];
 
 export interface IAppState {
   questions: IQuestionsWithAnswers;
+  setQuestions: Dispatch<
+    React.SetStateAction<IQuestionsWithAnswers | undefined>
+  >;
   currentQuestion: number;
+  setCurrentQuestion: Dispatch<SetStateAction<number>>;
 }
