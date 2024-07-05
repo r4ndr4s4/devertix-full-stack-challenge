@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { IAppState } from "./types";
+import { IAppState } from "../types";
 
 const initialAppState: IAppState = {
   questions: [],

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button, Typography } from "antd";
-import { AppStateContext } from "../App/AppState";
-import { NUMBER_OF_QUESTIONS } from "../App";
+import { AppStateContext } from "../../contexts/AppState";
+import { NUMBER_OF_QUESTIONS } from "../../utils/config";
 
 const { Title } = Typography;
 

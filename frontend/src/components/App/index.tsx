@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Typography } from "antd";
 import styled from "@emotion/styled";
-import { AppStateContext } from "./AppState";
+import { AppStateContext } from "../../contexts/AppState";
 import Intro from "../Intro";
-import { AppState, IQuestions, IQuestionsWithAnswers } from "./types";
+import { AppState, IQuestions, IQuestionsWithAnswers } from "../../types";
 import Question from "../Question";
 import Results from "../Results";
-import env from "../utils/env";
+import env from "../../utils/env";
+import { NUMBER_OF_QUESTIONS } from "../../utils/config";
 
 const { Paragraph } = Typography;
 
@@ -19,14 +20,10 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
-export const NUMBER_OF_QUESTIONS = 10;
-
 function App() {
   const [questions, setQuestions] = useState<IQuestionsWithAnswers>();
   const [currentQuestion, setCurrentQuestion] = useState(-1);
-  // TODO loading state
 
-  // TODO swr/react query
   useEffect(() => {
     (async () => {
       try {
@@ -53,7 +50,6 @@ function App() {
 
         setQuestions(questionsWithAnswers);
       } catch (e) {
-        // TODO overlay error message
         console.log("Error happened while fetching questions!", e);
       }
     })();

@@ -2,9 +2,9 @@ import { useCallback, useContext, useMemo } from "react";
 import { Button, Typography } from "antd";
 import { MinusCircleTwoTone, PlusCircleTwoTone } from "@ant-design/icons";
 import styled from "@emotion/styled";
-import { AppStateContext } from "../App/AppState";
-import { IQuestionsWithAnswers } from "../App/types";
-import { NUMBER_OF_QUESTIONS } from "../App";
+import { AppStateContext } from "../../contexts/AppState";
+import { IQuestionsWithAnswers } from "../../types";
+import { NUMBER_OF_QUESTIONS } from "../../utils/config";
 
 const { Title, Paragraph } = Typography;
 
