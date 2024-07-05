@@ -46,13 +46,9 @@ function Question() {
       </QuestionContainer>
 
       <ButtonContainer>
-        <Button type="primary" onClick={() => setCurrentAnswer(false)}>
-          False
-        </Button>
+        <Button onClick={() => setCurrentAnswer(false)}>False</Button>
 
-        <Button type="primary" onClick={() => setCurrentAnswer(true)}>
-          True
-        </Button>
+        <Button onClick={() => setCurrentAnswer(true)}>True</Button>
       </ButtonContainer>
     </>
   );
