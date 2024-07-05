@@ -40,7 +40,7 @@ function Results() {
 
     setQuestions(questionsWithAnswers);
 
-    setCurrentQuestion(0);
+    setCurrentQuestion(-1);
   }, [questions, setCurrentQuestion, setQuestions]);
 
   return (

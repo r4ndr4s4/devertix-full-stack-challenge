@@ -9,7 +9,7 @@ export const NUMBER_OF_QUESTIONS = 10;
 
 function App() {
   const [questions, setQuestions] = useState<IQuestionsWithAnswers>();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(-1);
   // TODO loading state
 
   // TODO swr/react query
@@ -58,9 +58,9 @@ function App() {
     <AppStateContext.Provider
       value={{ questions, setQuestions, currentQuestion, setCurrentQuestion }}
     >
-      {currentQuestion === 0 ? (
+      {currentQuestion === -1 ? (
         <Intro />
-      ) : currentQuestion <= NUMBER_OF_QUESTIONS ? (
+      ) : currentQuestion < NUMBER_OF_QUESTIONS ? (
         <Question />
       ) : (
         <Results />

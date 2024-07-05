@@ -4,7 +4,7 @@ import { IAppState } from "./types";
 const initialAppState: IAppState = {
   questions: [],
   setQuestions: () => true,
-  currentQuestion: 0,
+  currentQuestion: -1,
   setCurrentQuestion: () => true,
 };
 

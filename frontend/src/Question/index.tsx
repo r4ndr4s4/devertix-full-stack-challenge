@@ -9,7 +9,7 @@ function Question() {
   const setCurrentAnswer = useCallback(
     (currentAnswer: boolean) => {
       const currentQuestions = [...questions];
-      currentQuestions[currentQuestion - 1].currentAnswer = currentAnswer;
+      currentQuestions[currentQuestion].currentAnswer = currentAnswer;
 
       setQuestions(currentQuestions);
 
@@ -22,10 +22,10 @@ function Question() {
     <>
       <h1>
         Question
-        <br />({`${currentQuestion}/${NUMBER_OF_QUESTIONS}`})
+        <br />({`${currentQuestion + 1}/${NUMBER_OF_QUESTIONS}`})
       </h1>
 
-      <p>{questions[currentQuestion - 1].question}</p>
+      <p>{questions[currentQuestion].question}</p>
 
       <button onClick={() => setCurrentAnswer(false)}>False</button>
       <button onClick={() => setCurrentAnswer(true)}>True</button>

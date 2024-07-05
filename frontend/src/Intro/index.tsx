@@ -16,7 +16,7 @@ function Intro() {
 
       <h2>Can you score 100%?</h2>
 
-      <button onClick={() => setCurrentQuestion(1)}>BEGIN</button>
+      <button onClick={() => setCurrentQuestion(0)}>BEGIN</button>
     </>
   );
 }
