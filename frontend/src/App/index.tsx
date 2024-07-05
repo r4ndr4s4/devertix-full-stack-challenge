@@ -6,6 +6,7 @@ import Intro from "../Intro";
 import { AppState, IQuestions, IQuestionsWithAnswers } from "./types";
 import Question from "../Question";
 import Results from "../Results";
+import env from "../utils/env";
 
 const { Paragraph } = Typography;
 
@@ -29,11 +30,8 @@ function App() {
   useEffect(() => {
     (async () => {
       try {
-        // TODO env var validation
         const response = await fetch(
-          `${
-            import.meta.env.VITE_BACKEND_BASE_URL
-          }/questions?number=${NUMBER_OF_QUESTIONS}`
+          `${env.VITE_BACKEND_BASE_URL}/questions?number=${NUMBER_OF_QUESTIONS}`
         );
 
         if (!response.ok) {
@@ -43,8 +41,6 @@ function App() {
         const { data } = (await response.json()) as {
           data: { questions: IQuestions };
         };
-
-        console.log({ data }); // TODO remove
 
         const questionsWithAnswers: IQuestionsWithAnswers = data.questions.map(
           (question) => {
