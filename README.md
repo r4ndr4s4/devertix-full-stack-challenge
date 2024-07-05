@@ -22,10 +22,10 @@
 
 - This is the first time I used AWS Lambda therefore the deployment took a while so I had to sacrifice some coding because of it.
 - Database is not used, the endpoint is just returning simply from a JSON file instead, this is also because of the same reason.
-- As part of how I planned to build on the /questions endpoint while planning the communication with the database, I introduced a "number" query parameter which (in its current form) is just a simple configuration feature.
+- While planning the communication with the database, I introduced a "number" query parameter for the /questions endpoint which (in the app's current form) is just a simple configuration feature.
 
 ## Improvement ideas
 
-- React Router is not used because I don't think it makes sense in a quiz app to have the individual questions linkable. Instead, I came up with the idea to store most of the AppState's content in local storage so the user can get back anytime and continue from where he left off.
+- React Router is not used because I don't think it makes sense in a quiz app to make the individual questions linkable. Instead, I came up with the idea to store the AppState context's content in local storage so the user can get back anytime and continue from where he left off.
 - I think Redux is not a must-have in the current state of the app. The AppState context was structured in a way that if Redux would become necessary (for example because of its time-traveling feature to debug easier), it could be pulled in quickly. I would use [Redux Toolkit](https://redux-toolkit.js.org/) for this.
-- I wanted to create some [snapshot tests](https://vitest.dev/guide/snapshot.html) at least for the frontend but I haven't used it with Vite yet and some complications came up. For the backend, I would create some integration tests with [Supertest](https://github.com/ladjs/supertest).
+- I wanted to create at least some [snapshot tests](https://vitest.dev/guide/snapshot.html) for the frontend but I haven't used it with Vite yet and some complications came up. For the backend, I would create some integration tests with [SuperTest](https://github.com/ladjs/supertest).
