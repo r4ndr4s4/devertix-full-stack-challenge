@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import { pino } from 'pino';
 
 import healthCheckRouter from '@/api/healthCheck/healthCheckRouter';
@@ -18,6 +19,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(helmet());
 
 app.use('/health-check', healthCheckRouter);
 app.use('/questions', questionsRouter);
