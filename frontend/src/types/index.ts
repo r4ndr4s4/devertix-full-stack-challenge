@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 interface IQuestion {
   question: string;
   answer: boolean;
@@ -17,9 +15,7 @@ export type AppState = "INTRO" | "QUESTION" | "RESULTS";
 
 export interface IAppState {
   questions: IQuestionsWithAnswers;
-  setQuestions: Dispatch<
-    React.SetStateAction<IQuestionsWithAnswers | undefined>
-  >;
+  setQuestions: (newQuestions: IQuestionsWithAnswers | undefined) => void;
   currentQuestion: number;
-  setCurrentQuestion: Dispatch<SetStateAction<number>>;
+  setCurrentQuestion: (newCurrentQuestion: number) => void;
 }

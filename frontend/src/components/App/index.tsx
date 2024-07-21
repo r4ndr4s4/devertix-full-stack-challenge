@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Typography } from "antd";
 import styled from "@emotion/styled";
 import { AppStateContext } from "../../contexts/AppState";
@@ -48,6 +48,8 @@ function App() {
           }
         );
 
+        // sync from localStorage
+
         setQuestions(questionsWithAnswers);
       } catch (e) {
         console.log("Error happened while fetching questions!", e);
@@ -76,13 +78,44 @@ function App() {
     }
   }, [appState]);
 
+  const syncQuestions = useCallback(
+    (newQuestions: IQuestionsWithAnswers | undefined) => {
+      setQuestions(newQuestions);
+
+      const questionsToSync = JSON.stringify(newQuestions);
+      localStorage.setItem("questions", questionsToSync);
+    },
+    []
+  );
+
+  const syncCurrentQuestion = useCallback((newCurrentQuestion: number) => {
+    setCurrentQuestion(newCurrentQuestion);
+
+    localStorage.setItem("currentQuestion", String(newCurrentQuestion));
+
+    // TODO reuse appState from above
+    localStorage.setItem(
+      "appState",
+      newCurrentQuestion === -1
+        ? "INTRO"
+        : newCurrentQuestion < NUMBER_OF_QUESTIONS
+        ? "QUESTION"
+        : "RESULTS"
+    );
+  }, []);
+
   if (!questions) {
     return <Paragraph>Questions are not fetched...</Paragraph>;
   }
 
   return (
     <AppStateContext.Provider
-      value={{ questions, setQuestions, currentQuestion, setCurrentQuestion }}
+      value={{
+        questions,
+        setQuestions: syncQuestions,
+        currentQuestion,
+        setCurrentQuestion: syncCurrentQuestion,
+      }}
     >
       <Container>{currentComponent}</Container>
     </AppStateContext.Provider>
