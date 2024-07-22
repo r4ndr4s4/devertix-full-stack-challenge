@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Typography } from "antd";
 import styled from "@emotion/styled";
+import { z } from "zod";
 import { AppStateContext } from "../../contexts/AppState";
 import Intro from "../Intro";
-import { AppState, IQuestions, IQuestionsWithAnswers } from "../../types";
+import {
+  type AppState,
+  type Questions,
+  type QuestionsWithAnswers,
+  QuestionsWithAnswers as questionsSchema,
+} from "../../types";
 import Question from "../Question";
 import Results from "../Results";
 import env from "../../utils/env";
@@ -21,12 +27,30 @@ const Container = styled.div`
 `;
 
 function App() {
-  const [questions, setQuestions] = useState<IQuestionsWithAnswers>();
+  const [questions, setQuestions] = useState<QuestionsWithAnswers>();
   const [currentQuestion, setCurrentQuestion] = useState(-1);
 
   useEffect(() => {
     (async () => {
       try {
+        const questionsToSync = localStorage.getItem("questions");
+
+        if (questionsToSync) {
+          const questionsToSyncAsJson = JSON.parse(questionsToSync);
+          questionsSchema.parse(questionsToSyncAsJson);
+
+          setQuestions(questionsToSyncAsJson);
+
+          const currentQuestionToSync = localStorage.getItem("currentQuestion");
+
+          const currentQuestionSchema = z.coerce.number();
+          currentQuestionSchema.parse(currentQuestionToSync);
+
+          setCurrentQuestion(Number(currentQuestionToSync));
+
+          return;
+        }
+
         const response = await fetch(
           `${env.VITE_BACKEND_BASE_URL}/questions?number=${NUMBER_OF_QUESTIONS}`
         );
@@ -36,10 +60,10 @@ function App() {
         }
 
         const { data } = (await response.json()) as {
-          data: { questions: IQuestions };
+          data: { questions: Questions };
         };
 
-        const questionsWithAnswers: IQuestionsWithAnswers = data.questions.map(
+        const questionsWithAnswers: QuestionsWithAnswers = data.questions.map(
           (question) => {
             return {
               ...question,
@@ -48,11 +72,12 @@ function App() {
           }
         );
 
-        // sync from localStorage
-
         setQuestions(questionsWithAnswers);
       } catch (e) {
-        console.log("Error happened while fetching questions!", e);
+        console.log(
+          "Error happened while fetching questions/syncing from localStorage!",
+          e
+        );
       }
     })();
   }, []);
@@ -79,7 +104,7 @@ function App() {
   }, [appState]);
 
   const syncQuestions = useCallback(
-    (newQuestions: IQuestionsWithAnswers | undefined) => {
+    (newQuestions: QuestionsWithAnswers | undefined) => {
       setQuestions(newQuestions);
 
       const questionsToSync = JSON.stringify(newQuestions);

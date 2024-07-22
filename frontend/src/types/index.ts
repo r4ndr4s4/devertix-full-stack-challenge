@@ -1,21 +1,25 @@
-interface IQuestion {
-  question: string;
-  answer: boolean;
-}
+import { z } from "zod";
 
-export type IQuestions = IQuestion[];
+const Question = z.object({
+  question: z.string(),
+  answer: z.boolean(),
+});
 
-interface IQuestionWithAnswer extends IQuestion {
-  currentAnswer: boolean | undefined;
-}
+type Question = z.infer<typeof Question>;
+export type Questions = Question[];
 
-export type IQuestionsWithAnswers = IQuestionWithAnswer[] | [];
+const QuestionWithAnswer = Question.extend({
+  currentAnswer: z.boolean().optional(), // TODO don't allow optional, only to be undefined
+});
+export const QuestionsWithAnswers = z.array(QuestionWithAnswer);
+
+export type QuestionsWithAnswers = z.infer<typeof QuestionsWithAnswers> | [];
 
 export type AppState = "INTRO" | "QUESTION" | "RESULTS";
 
 export interface IAppState {
-  questions: IQuestionsWithAnswers;
-  setQuestions: (newQuestions: IQuestionsWithAnswers | undefined) => void;
+  questions: QuestionsWithAnswers;
+  setQuestions: (newQuestions: QuestionsWithAnswers | undefined) => void;
   currentQuestion: number;
   setCurrentQuestion: (newCurrentQuestion: number) => void;
 }

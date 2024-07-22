@@ -3,7 +3,7 @@ import { Button, Typography } from "antd";
 import { MinusCircleTwoTone, PlusCircleTwoTone } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { AppStateContext } from "../../contexts/AppState";
-import { IQuestionsWithAnswers } from "../../types";
+import { type QuestionsWithAnswers } from "../../types";
 import { NUMBER_OF_QUESTIONS } from "../../utils/config";
 
 const { Title, Paragraph } = Typography;
@@ -43,7 +43,7 @@ function Results() {
   const resetGame = useCallback(() => {
     const currentQuestions = [...questions];
 
-    const questionsWithAnswers: IQuestionsWithAnswers = currentQuestions.map(
+    const questionsWithAnswers: QuestionsWithAnswers = currentQuestions.map(
       (question) => {
         return {
           ...question,
